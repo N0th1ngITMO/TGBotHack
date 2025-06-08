@@ -1,0 +1,6 @@
+org/example/service/DBService.class
+org/example/service/RedisService.class
+org/example/dto/MessagePayload.class
+org/example/App.class
+org/example/bot/MyBot.class
+org/example/service/LinkService.class

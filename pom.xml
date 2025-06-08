@@ -86,6 +86,11 @@
             <version>5.13.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.6.15.Final</version>
+        </dependency>
     </dependencies>
 
     <build>

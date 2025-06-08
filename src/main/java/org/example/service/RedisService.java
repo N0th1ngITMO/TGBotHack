@@ -23,14 +23,23 @@ public class RedisService {
     }
     // если такоего нет, но мы определили
     // что это спам - вносим в редис
-    public void addInReddis(Long userId, String text){
+    public void addInReddis(String text){
         try (Jedis jedis = pool.getResource()) {
             String textKey = key(text);
                 // Сохраняем ключ с TTL
-            jedis.setex(textKey, TTL_SECONDS, userId.toString());
+            jedis.setex(textKey, TTL_SECONDS, text.toString());
         }
     }
-
+    public boolean isRateLimited(Long userId, int limit, int windowSeconds) {
+        String rateKey = "rate:" + userId;
+        try (Jedis jedis = pool.getResource()) {
+            Long count = jedis.incr(rateKey);
+            if (count == 1) {
+                jedis.expire(rateKey, windowSeconds);
+            }
+            return count > limit;
+        }
+    }
     private String key(Object value) {
         return "user:" + value.toString();
     }
